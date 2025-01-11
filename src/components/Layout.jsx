@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { SlCalender } from "react-icons/sl";
-const Layout = () => {
+const Layout = React.memo(() => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-100">
       {/* Sidebar Navigation */}
@@ -52,6 +52,6 @@ const Layout = () => {
       </main>
     </div>
   );
-};
+});
 
 export default Layout;

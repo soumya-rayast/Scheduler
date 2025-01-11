@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useInterviewStore from '../store/interviewStore';
 import InterviewForm from '../components/InterviewFrom';
 
-const CreateInterview = () => {
+const CreateInterview = React.memo(() => {
   const [formState, setFormState] = useState({
     candidateName: '',
     interviewerName: '',
@@ -44,7 +44,6 @@ const CreateInterview = () => {
       toast.error('Interview time conflicts with existing schedule');
       return;
     }
-
     useInterviewStore.getState().addInterview(interviewData);
     toast.success('Interview scheduled successfully');
     setFormState({
@@ -57,9 +56,6 @@ const CreateInterview = () => {
     });
     navigate('/');
   };
-
-  const { errors } = formState;
-
   return (
     <div className="max-w-2xl mx-auto px-1 sm:px-6 lg:px-8 md:py-8">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -75,6 +71,6 @@ const CreateInterview = () => {
       </div>
     </div>
   );
-};
+});
 
 export default CreateInterview;

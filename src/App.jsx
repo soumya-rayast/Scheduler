@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Layout from './components/Layout';
-import Dashboard from './pages/Dashboard';
-import CreateInterview from './pages/CreateInterview';
-import EditInterview from './pages/EditInterview';
+
+// react lazy components
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const CreateInterview = lazy(() => import('./pages/CreateInterview'));
+const EditInterview = lazy(() => import('./pages/EditInterview'));
 
 function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right" />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="create" element={<CreateInterview />} />
-          <Route path="edit/:id" element={<EditInterview />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div className='flex items-center justify-center mt-20'>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="create" element={<CreateInterview />} />
+            <Route path="edit/:id" element={<EditInterview />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useInterviewStore from '../store/interviewStore';
 import InterviewForm from '../components/InterviewFrom';
 
-const EditInterview = () => {
+const EditInterview = React.memo(() => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { interviews, updateInterview, deleteInterview, hasConflict } = useInterviewStore();
@@ -64,6 +64,6 @@ const EditInterview = () => {
       />
     </div>
   );
-};
+});
 
 export default EditInterview;

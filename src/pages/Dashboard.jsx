@@ -10,7 +10,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales: { 'en-US': enUS } });
 
-const Dashboard = () => {
+const Dashboard = React.memo(() => {
   const [interviews, setInterviews] = useState([]);
   const [filters, setFilters] = useState({
     interviewer: '',
@@ -19,13 +19,12 @@ const Dashboard = () => {
     endDate: '',
   });
   const navigate = useNavigate();
-
   useEffect(() => {
     const unsubscribe = useInterviewStore.subscribe((state) => setInterviews(state.interviews));
     setInterviews(useInterviewStore.getState().interviews);
     return () => unsubscribe();
   }, []);
-// function for styling an event 
+  // function for styling an event 
   const getEventStyle = (event) => {
     const colors = {
       Technical: '#4F46E5',
@@ -43,14 +42,19 @@ const Dashboard = () => {
       },
     };
   };
-
-  const handleEventDrop = ({ event, start, end }) => {
+  // functionality for drag and drop : not working properly
+  const handleEventDrop = async ({ event, start, end }) => {
     const updatedEvent = { ...event, start, end };
-    useInterviewStore.getState().updateInterview(event.id, updatedEvent);
-    const updatedInterviews = interviews.map((interview) =>
-      interview.id === event.id ? updatedEvent : interview
-    );
-    setInterviews(updatedInterviews);
+    try {
+      await useInterviewStore.getState().updateInterview(event.id, updatedEvent);
+      setInterviews((prevInterviews) =>
+        prevInterviews.map((interview) =>
+          interview.id === event.id ? updatedEvent : interview
+        )
+      );
+    } catch (error) {
+      console.error("Failed to update the interview:", error);
+    }
   };
   // function for filter 
   const handleFilterChange = (e) => {
@@ -89,6 +93,7 @@ const Dashboard = () => {
       <div className="space-y-4 p-2 sm:p-6">
         {/* Filter Controls */}
         <div className="flex flex-wrap gap-4 p-4 bg-white shadow rounded-lg">
+          {/* input for interviewer name */}
           <input
             type="text"
             name="interviewer"
@@ -97,6 +102,7 @@ const Dashboard = () => {
             className="border rounded p-2"
             placeholder="Filter by Interviewer"
           />
+          {/* input for candidate name */}
           <input
             type="text"
             name="candidate"
@@ -105,6 +111,7 @@ const Dashboard = () => {
             className="border rounded p-2"
             placeholder="Filter by Candidate"
           />
+          {/* start date */}
           <input
             type="date"
             name="startDate"
@@ -113,6 +120,7 @@ const Dashboard = () => {
             className="border rounded p-2"
             placeholder="Start Date"
           />
+          {/* end date */}
           <input
             type="date"
             name="endDate"
@@ -156,6 +164,6 @@ const Dashboard = () => {
       </div>
     </DndProvider>
   );
-};
+});
 
 export default Dashboard;

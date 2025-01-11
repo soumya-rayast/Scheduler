@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InterviewForm = ({ formData, onChange, onSubmit, onDelete, isEditing }) => {
+const InterviewForm = React.memo(({ formData, onChange, onSubmit, onDelete, isEditing }) => {
     return (
         <form onSubmit={onSubmit} className="p-4 space-y-6">
             <div className="grid grid-cols-1 gap-6">
@@ -115,6 +115,6 @@ const InterviewForm = ({ formData, onChange, onSubmit, onDelete, isEditing }) =>
 
         </form>
     );
-};
+});
 
 export default InterviewForm;

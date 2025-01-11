@@ -19,11 +19,11 @@ To set up the Interview Scheduler project locally, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/soumyarayast/scheduler.git
+   https://github.com/soumya-rayast/Scheduler.git
 
 2. **Navigate to the Project Directory**:
    ```bash
-   cd scheduler
+   cd Scheduler
 
 3. **Install Dependencies: Make sure you have Node.js and npm installed. Then run:**:
    ```bash

@@ -33,5 +33,5 @@ To set up the Interview Scheduler project locally, follow these steps:
    ```bash
    npm start
 
-5. **Access the Application: Open your web browser and navigate to http://localhost:3000 to access the Interview Scheduler.**
+5. **Access the Application: Open your web browser and navigate to http://localhost:5173 to access the Interview Scheduler.**
 
